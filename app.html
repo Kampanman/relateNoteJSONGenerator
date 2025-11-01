@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ノート管理システム</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="h1Theme">ノート管理システム</h1>
+        
+        <div class="mode-buttons">
+            <button class="mode-btn" data-mode="view">ノートデータ閲覧モード</button>
+            <button class="mode-btn" data-mode="create">ノートデータ新規作成モード</button>
+            <button class="mode-btn" data-mode="update">ノートデータ更新モード</button>
+        </div>
+
+        <div class="content-area" id="contentArea">
+            <p style="text-align: center; color: #718096;">モードを選択してください</p>
+        </div>
+    </div>
+
+    <button class="scroll-top-btn" id="scrollTopBtn">⇑</button>
+
+    <script src="static/functions.js"></script>
+    <script>
+        const theme = "Relate Note JSON Generator";
+        document.title = h1Theme.innerText = theme;
+
+        let currentMode = null;
+        let noteData = {
+            title: '',
+            created: '',
+            contents: []
+        };
+        let loadedFile = null;
+
+        // モードボタンのイベント設定
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentMode = btn.dataset.mode;
+                switchMode(currentMode);
+            });
+        });
+
+        // トップに戻るボタン
+        document.getElementById('scrollTopBtn').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
