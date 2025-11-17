@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- 背景円 -->
+  <circle cx="32" cy="32" r="32" fill="url(#grad1)"/>
+  
+  <!-- グラデーション定義 -->
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- ノート本体 -->
+  <rect x="16" y="14" width="28" height="36" rx="2" fill="white"/>
+  
+  <!-- ノートの線 -->
+  <line x1="20" y1="22" x2="40" y2="22" stroke="#667eea" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="20" y1="28" x2="40" y2="28" stroke="#667eea" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="20" y1="34" x2="35" y2="34" stroke="#667eea" stroke-width="1.5" stroke-linecap="round"/>
+  
+  <!-- ペン -->
+  <path d="M 36 38 L 42 44 L 45 41 L 39 35 Z" fill="#764ba2"/>
+  <path d="M 42 44 L 45 41 L 47 43 L 44 46 Z" fill="#5a3a82"/>
+  <circle cx="48" cy="42" r="2" fill="#ffd700"/>
+</svg>

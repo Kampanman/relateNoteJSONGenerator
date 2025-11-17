@@ -1,3 +1,6 @@
+/*
+ * 全体の構成 
+ */
 * {
   margin: 0;
   padding: 0;
@@ -22,10 +25,17 @@ body {
 }
 
 h1 {
+  font-size: 2em;
+}
+
+small#headerMessage {
+  display: block;
+  margin-bottom: 30px;
+}
+
+h1, small#headerMessage {
   text-align: center;
   color: #667eea;
-  margin-bottom: 30px;
-  font-size: 2em;
 }
 
 .mode-buttons {
@@ -141,6 +151,7 @@ textarea {
 .main-text {
   flex: 1;
   word-wrap: break-word;
+  white-space: pre-wrap; /* 改行とスペースをそのまま表示 */
 }
 
 .toggle-btn {
@@ -157,6 +168,16 @@ textarea {
 
 .toggle-btn:hover {
   background: #5568d3;
+}
+
+/* 関連文が設定されている場合のトグルボタンのスタイル */
+.toggle-btn.has-relate {
+  background-color: #48bb78; /* 成功色（緑） */
+}
+
+/* ホバー時のスタイルも定義 */
+.toggle-btn.has-relate:hover {
+  background-color: #38a169; /* 少し暗い緑 */
 }
 
 .relate-section {
@@ -214,6 +235,7 @@ textarea {
 
 .relate-item-text {
   flex: 1;
+  white-space: pre-wrap; /* 改行とスペースをそのまま表示 */
 }
 
 .drop-zone {
@@ -297,4 +319,22 @@ textarea {
 .button-container {
   text-align: center;
   margin-top: 20px;
+}
+
+.url-input-container {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.url-input-container label {
+  margin-bottom: 10px;
+}
+
+.url-input-group {
+  display: flex;
+  gap: 10px;
+}
+.url-input-group input {
+  flex: 1;
 }
