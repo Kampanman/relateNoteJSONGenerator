@@ -558,13 +558,23 @@ function showUpdateRelatePhase() {
     const relatePhase = document.getElementById('updateRelatePhase');
     
     noteData.contents.forEach((item, index) => {
+        // 基幹文の前に挿入ボタンを表示するためのコンテナ
+        const insertContainer = document.createElement('div');
+        insertContainer.id = `insert-container-${index}`;
+        insertContainer.className = 'insert-main-wrapper';
+        insertContainer.innerHTML = `<button class="btn-add-between" onclick="showAddMainUI(${index})">ここに基幹文を追加</button>`;
+        relatePhase.appendChild(insertContainer);
+
         const lineDiv = document.createElement('div');
         lineDiv.className = 'main-line';
         let relateSection = null;
         
         if (item.main.trim() === '') {
             lineDiv.classList.add('empty');
-            lineDiv.innerHTML = '<div class="empty-line"></div>';
+            lineDiv.innerHTML = `
+                <div class="empty-line"></div>
+                <button class="small-btn minus" onclick="deleteMainLine(${index})" title="この行を削除">削</button>
+            `;
         } else {
             const hasRelate = item.relate && item.relate.length > 0;
             const buttonClass = `toggle-btn ${hasRelate ? 'has-relate' : ''}`;
@@ -572,6 +582,7 @@ function showUpdateRelatePhase() {
             lineDiv.innerHTML = `
                 <div class="main-text">${escapeHtml(item.main)}</div>
                 <button class="${buttonClass}" onclick="toggleRelateInput(${index})">＋</button>
+                <button class="small-btn minus" onclick="deleteMainLine(${index})" title="この基幹文を削除">削</button>
             `;
             
             relateSection = document.createElement('div');
@@ -614,7 +625,73 @@ function showUpdateRelatePhase() {
         if (relateSection) relatePhase.appendChild(relateSection);
     });
     
-    relatePhase.innerHTML += '<div class="button-container"><button class="btn btn-primary json-btn" onclick="prepareDownload()">データをJSON化する</button></div>';
+    // 最後の挿入ボタン
+    const lastInsertContainer = document.createElement('div');
+    const lastIndex = noteData.contents.length;
+    lastInsertContainer.id = `insert-container-${lastIndex}`;
+    lastInsertContainer.className = 'insert-main-wrapper';
+    lastInsertContainer.innerHTML = `<button class="btn-add-between" onclick="showAddMainUI(${lastIndex})">末尾に基幹文を追加</button>`;
+    relatePhase.appendChild(lastInsertContainer);
+
+    // JSON化ボタンの追加
+    const downloadBtnContainer = document.createElement('div');
+    downloadBtnContainer.className = 'button-container';
+    downloadBtnContainer.innerHTML = '<button class="btn btn-primary json-btn" onclick="prepareDownload()">データをJSON化する</button>';
+    relatePhase.appendChild(downloadBtnContainer);
+}
+
+// 基幹文の削除
+function deleteMainLine(index) {
+    const isMainEmpty = !noteData.contents[index].main || noteData.contents[index].main.trim() === '';
+    const targetText = isMainEmpty ? "(空行)" : noteData.contents[index].main;
+    const truncatedText = targetText.length > 20 ? targetText.substring(0, 20) + '...' : targetText;
+    
+    let confirmMessage = `基幹文「${truncatedText}」を削除しますか？`;
+    if (!isMainEmpty) {
+        confirmMessage += `\n※関連付けられた文もすべて削除されます。`;
+    }
+
+    if (confirm(confirmMessage)) {
+        noteData.contents.splice(index, 1);
+        showUpdateRelatePhase();
+    }
+}
+
+// 基幹文挿入用UIの表示
+function showAddMainUI(index) {
+    const container = document.getElementById(`insert-container-${index}`);
+    container.innerHTML = `
+        <div class="add-main-input-area" style="border: 2px dashed #cbd5e0; padding: 15px; margin: 10px 0; border-radius: 8px; background: #edf2f7;">
+            <textarea id="new-main-text-${index}" style="width: 100%; min-height: 80px; margin-bottom: 10px; padding: 8px; border-radius: 4px; border: 1px solid #a0aec0;" placeholder="新しい基幹文を入力してください"></textarea>
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                <button class="btn btn-danger btn-sm" onclick="showUpdateRelatePhase()">キャンセル</button>
+                <button class="btn btn-primary btn-sm" onclick="confirmAddMain(${index})">この内容を追加する</button>
+            </div>
+        </div>
+    `;
+    document.getElementById(`new-main-text-${index}`).focus();
+}
+
+// 基幹文挿入の実行
+function confirmAddMain(index) {
+    const textarea = document.getElementById(`new-main-text-${index}`);
+    const text = textarea.value.trim();
+    
+    if (!text) {
+        alert('基幹文の内容を入力してください。');
+        return;
+    }
+    
+    if (confirm('この内容で新しい基幹文を追加します。よろしいですか？')) {
+        const newItem = {
+            main: text,
+            relate: []
+        };
+        
+        // 指定した位置に挿入
+        noteData.contents.splice(index, 0, newItem);
+        showUpdateRelatePhase();
+    }
 }
 
 function showViewData() {

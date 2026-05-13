@@ -132,6 +132,15 @@ textarea {
   background: #38a169;
 }
 
+.btn-danger {
+  background: #f56565;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #e53e3e;
+}
+
 .main-line {
   padding: 12px;
   border-left: 3px solid #667eea;
@@ -313,6 +322,7 @@ textarea {
 }
 
 .empty-line {
+  flex: 1;
   height: 24px;
 }
 
@@ -337,4 +347,29 @@ textarea {
 }
 .url-input-group input {
   flex: 1;
+}
+
+/* 挿入ボタンのコンテナ */
+.insert-main-wrapper {
+  text-align: center;
+}
+
+/* 基幹文追加ボタン（行間用） */
+.btn-add-between {
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 5px rgba(102, 126, 234, 0.3);
+}
+
+.btn-add-between:hover {
+  background: #5568d3;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
 }

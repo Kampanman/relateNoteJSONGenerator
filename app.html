@@ -30,7 +30,8 @@
     <script src="static/functions.js"></script>
     <script>
         const theme = "Relate Note JSON Generator";
-        document.title = h1Theme.innerText = theme;
+        const h1ThemeElement = document.getElementById('h1Theme');
+        document.title = h1ThemeElement.innerText = theme;
 
         let currentMode = null;
         let noteData = {
@@ -41,12 +42,14 @@
         let loadedFile = null;
 
         // モードボタンのイベント設定
-        document.querySelectorAll('.mode-btn').forEach(btn => {
+        const modeButtons = document.querySelectorAll('.mode-btn');
+        modeButtons.forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                modeButtons.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 currentMode = btn.dataset.mode;
-                switchMode(currentMode);
+                // switchModeが定義されていることを確認してから呼び出し
+                if (typeof switchMode === 'function') switchMode(currentMode);
             });
         });
 
