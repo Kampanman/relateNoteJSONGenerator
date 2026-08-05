@@ -2,12 +2,30 @@ function switchMode(mode) {
     const contentArea = document.getElementById('contentArea');
     contentArea.innerHTML = '';
     
+    // タイトルスペースを非表示・クリアにする
+    const titleSpace = document.getElementById('noteTitleSpace');
+    if (titleSpace) {
+        titleSpace.style.display = 'none';
+        const titleText = document.getElementById('noteTitleText');
+        if (titleText) titleText.textContent = '';
+    }
+    
     if (mode === 'create') {
         showCreateMode();
     } else if (mode === 'update') {
         showUpdateMode();
     } else if (mode === 'view') {
         showViewMode();
+    }
+}
+
+// タイトル表示用スペースの更新と表示
+function displayTitleSpace() {
+    const titleSpace = document.getElementById('noteTitleSpace');
+    const titleText = document.getElementById('noteTitleText');
+    if (titleSpace && titleText) {
+        titleText.textContent = noteData.title || '';
+        titleSpace.style.display = 'flex';
     }
 }
 
@@ -65,6 +83,7 @@ function registerMain() {
 }
 
 function showRelatePhase() {
+    displayTitleSpace();
     const contentArea = document.getElementById('contentArea');
     contentArea.innerHTML = '<div id="relatePhase"></div>';
     
@@ -297,6 +316,12 @@ function handleRelateInput(event, mainIndex) {
 }
 
 function prepareDownload() {
+    // ダウンロード確認時はタイトルスペースを非表示にする
+    const titleSpace = document.getElementById('noteTitleSpace');
+    if (titleSpace) {
+        titleSpace.style.display = 'none';
+    }
+
     const contentArea = document.getElementById('contentArea');
     const relateCount = noteData.contents.filter(item => item.relate.length > 0).length;
     
@@ -553,6 +578,7 @@ function validateNoteData(data) {
 }
 
 function showUpdateRelatePhase() {
+    displayTitleSpace();
     const contentArea = document.getElementById('contentArea');
     contentArea.innerHTML = '<div id="updateRelatePhase"></div>';
     const relatePhase = document.getElementById('updateRelatePhase');
@@ -695,6 +721,7 @@ function confirmAddMain(index) {
 }
 
 function showViewData() {
+    displayTitleSpace();
     const contentArea = document.getElementById('contentArea');
     contentArea.innerHTML = '<div id="viewDataPhase"></div>';
     const viewPhase = document.getElementById('viewDataPhase');

@@ -1,5 +1,5 @@
 /*
- * 全体の構成 
+ * 全体の構成
  */
 * {
   margin: 0;
@@ -372,4 +372,32 @@ textarea {
   background: #5568d3;
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
+}
+
+/*
+ * タイトルコーナースペース
+ */
+.note-title-space {
+  background: #edf2f7;
+  border-left: 4px solid #667eea;
+  padding: 15px 20px;
+  margin-bottom: 25px;
+  border-radius: 0 8px 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.note-title-label {
+  font-weight: bold;
+  color: #4a5568;
+  flex-shrink: 0;
+}
+
+.note-title-text {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #2d3748;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }

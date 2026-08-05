@@ -1,62 +1,76 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ノート管理システム</title>
-    <link rel="stylesheet" href="static/style.css">
-    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
-</head>
+    <link rel="stylesheet" href="static/style.css" />
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <h1 id="h1Theme">ノート管理システム</h1>
-        <small id="headerMessage">Created by Claude.<br />Supported by Gemini-Code-Assist.</small>
-        
-        <div class="mode-buttons">
-            <button class="mode-btn" data-mode="view">ノートデータ閲覧モード</button>
-            <button class="mode-btn" data-mode="create">ノートデータ新規作成モード</button>
-            <button class="mode-btn" data-mode="update">ノートデータ更新モード</button>
-        </div>
+      <h1 id="h1Theme">ノート管理システム</h1>
+      <small id="headerMessage"
+        >Created by Claude.<br />Supported by Gemini-Code-Assist.</small
+      >
 
-        <div class="content-area" id="contentArea">
-            <p style="text-align: center; color: #718096;">モードを選択してください</p>
-        </div>
+      <div class="mode-buttons">
+        <button class="mode-btn" data-mode="view">
+          ノートデータ閲覧モード
+        </button>
+        <button class="mode-btn" data-mode="create">
+          ノートデータ新規作成モード
+        </button>
+        <button class="mode-btn" data-mode="update">
+          ノートデータ更新モード
+        </button>
+      </div>
+
+      <div id="noteTitleSpace" class="note-title-space" style="display: none">
+        <span class="note-title-label">ノートタイトル:</span>
+        <span id="noteTitleText" class="note-title-text"></span>
+      </div>
+
+      <div class="content-area" id="contentArea">
+        <p style="text-align: center; color: #718096">
+          モードを選択してください
+        </p>
+      </div>
     </div>
 
     <button class="scroll-top-btn" id="scrollTopBtn">⇑</button>
 
     <script src="static/functions.js"></script>
     <script>
-        const theme = "Relate Note JSON Generator";
-        const h1ThemeElement = document.getElementById('h1Theme');
-        document.title = h1ThemeElement.innerText = theme;
+      const theme = "Relate Note JSON Generator";
+      const h1ThemeElement = document.getElementById("h1Theme");
+      document.title = h1ThemeElement.innerText = theme;
 
-        let currentMode = null;
-        let noteData = {
-            title: '',
-            created: '',
-            contents: []
-        };
-        let loadedFile = null;
+      let currentMode = null;
+      let noteData = {
+        title: "",
+        created: "",
+        contents: [],
+      };
+      let loadedFile = null;
 
-        // モードボタンのイベント設定
-        const modeButtons = document.querySelectorAll('.mode-btn');
-        modeButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                modeButtons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentMode = btn.dataset.mode;
-                // switchModeが定義されていることを確認してから呼び出し
-                if (typeof switchMode === 'function') switchMode(currentMode);
-            });
+      // モードボタンのイベント設定
+      const modeButtons = document.querySelectorAll(".mode-btn");
+      modeButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          modeButtons.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          currentMode = btn.dataset.mode;
+          // switchModeが定義されていることを確認してから呼び出し
+          if (typeof switchMode === "function") switchMode(currentMode);
         });
+      });
 
-        // トップに戻るボタン
-        document.getElementById('scrollTopBtn').addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+      // トップに戻るボタン
+      document.getElementById("scrollTopBtn").addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
     </script>
-</body>
+  </body>
 </html>
